@@ -252,13 +252,13 @@ Optionally start from POS."
      (propertize (concat "@" handle)
                  'face 'mastodon-handle-face
                  'mouse-face 'highlight
-		 ;; TODO: Replace url browsing with native profile viewing
-		 'mastodon-tab-stop 'user-handle
+                 ;; TODO: Replace url browsing with native profile viewing
+                 'mastodon-tab-stop 'user-handle
                  'account account
-		 'shr-url profile-url
-		 'keymap mastodon-tl--link-keymap
+                 'shr-url profile-url
+                 'keymap mastodon-tl--link-keymap
                  'mastodon-handle (concat "@" handle)
-		 'help-echo (concat "Browse user profile of @" handle))
+                 'help-echo (concat "Browse user profile of @" handle))
      ")")))
 
 (defun mastodon-tl--byline-boosted (toot)
@@ -374,7 +374,7 @@ it is `mastodon-tl--byline-boosted'"
                'display (if mastodon-tl--enable-relative-timestamps
                             (mastodon-tl--relative-time-description parsed-time)
                           parsed-time))
-              (propertize "\n  ------------" 'face 'default))
+              (propertize "\n" 'face 'default))
       'favourited-p faved
       'boosted-p    boosted
       'byline       t))))
@@ -641,8 +641,10 @@ it is `mastodon-tl--byline-boosted'"
   (let ((start-pos (point)))
     (insert
      (propertize
-      (concat body
-              (mastodon-tl--byline toot author-byline action-byline))
+      (concat
+       (mastodon-tl--byline toot author-byline action-byline)
+       "   " body
+       (propertize "\n  ________________________________________________________________________________\n\n" 'face 'default))
       'toot-id      (cdr (assoc 'id toot))
       'base-toot-id (mastodon-tl--toot-id toot)
       'toot-json    toot)
